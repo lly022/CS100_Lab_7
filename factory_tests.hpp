@@ -120,7 +120,7 @@ TEST(FactoryTest, InvalidInput3) {
 }
 
 TEST(FactoryTest, InvalidInput4) {
-        char* test_val[3];
+        char* test_val[4];
         test_val[0]="8";
         test_val[1]="*";
         test_val[2]="5";
@@ -133,7 +133,7 @@ TEST(FactoryTest, InvalidInput4) {
 }
 
 TEST(FactoryTest, InvalidInput5) {
-        char* test_val[3];
+        char* test_val[4];
         test_val[0]="*";
         test_val[1]="5";
         test_val[2]="*";
