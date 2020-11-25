@@ -69,7 +69,6 @@ class Factory{
 			temp2 = new Op(stod(vect.at(0)));
 			list.push(temp2); 
 			for(int i = 1; i < vect.size(); i+=2){
-				cout << 4 <<endl;
 				if(vect.at(i) == "+"){
 					temp3 = new Op(stod(vect.at(i+1)));
 					temp2 = list.top();
