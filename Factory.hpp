@@ -3,30 +3,48 @@
 #include <iostream>
 #include <ctype.h>
 #include <stack>
+#include <vector>
+#include "base.hpp"
+#include "op.hpp"
+#include "sub.hpp"
+#include "mult.hpp"
+#include "add.hpp"
+#include "Div.hpp"
+#include "pow.hpp"
+
+using namespace std;
+
+class base;
 
 class Factory{
 	public:
+		Factory() { };
 		Base* parse(char** input, int length){
-			boolean flag = 0; //0 = operand, 1 = operator
+			bool flag = 0; //0 = operand, 1 = operator
 			std::stack<Base*> list;
 			if(length % 2 == 0){ //even or odd check
-				std::cout << "Input is invalid" << std::end1;
+				cout << "Input is invalid" << endl;
 				return nullptr;
 			}
 			if(length == 1){ //just 1 operand/operator in array
-				if(isdigit(input[0])){
-					Base* base = new Base(input[0]);
-					return base;
+				string val= static_cast<string>(input[0]);
+				if(isdigit(val.at(0))){
+					Op* val = new Op(atoi(input[0]));
+					return val;
 				}
 				else{
-					std::cout << "Input is invalid" << std::endl;
+					cout << "Input is invalid" << endl;
 					return nullptr;
 				}
 			}
-			for(int i = 0; i < length; i++){ //checks operator follows operand and vice versa
-				if(input[i] == '+' || input[i] == '*' || input[i] == '-' || input[i] == '/' || input[i] == '**' ){
+			vector<string> vect;
+                        for(int i = 0; i < length; i++){
+                                vect.push_back(static_cast<string>(input[i]));
+                        }
+			for(int i = 0; i < vect.size(); i++){ //checks operator follows operand and vice versa
+				if(vect.at(i) == "+" || input[i] == "*" || input[i] == "-" || input[i] == "/" || input[i] == "**" ){
 					if(flag == 0){
-						std::cout << "Input is invalid" << std::endl;
+						cout << "Input is invalid" << endl;
 						return nullptr;
 					}
 					else{
@@ -34,9 +52,10 @@ class Factory{
 					}
 				 
 				}
-				if(isdigit(input[i])){
+				if(isdigit(vect.at(i).at(0))){
+					
 					if(flag == 1){
-						std::cout << "Input is invalid" << std::endl;
+						cout << "Input is invalid" << endl;
 						return nullptr;
 					}
 					else{
@@ -44,44 +63,50 @@ class Factory{
 					}
 				}	
 			}
-			
 			Base* temp1;
 			Base* temp2;
 			Base* temp3;
-			temp2 = new Base(input[0]);
+			temp2 = new Op(stod(vect.at(0)));
 			list.push(temp2); 
-			for(int i = 1; i < length; i+2){
-				if(input[i] == '+'){
-					temp3 = new Base(input[i+1]);
-					temp2 = list.pop();
+			for(int i = 1; i < vect.size(); i+=2){
+				cout << 4 <<endl;
+				if(vect.at(i) == "+"){
+					temp3 = new Op(stod(vect.at(i+1)));
+					temp2 = list.top();
+					list.pop();
 					temp1 = new Add(temp2, temp3);
 					list.push(temp1);
 				}
-				else if(input[i] == '*'){
-                                        temp3 = new Base(input[i+1]);
-                                        temp2 = list.pop();
+				else if(vect.at(i) == "*"){
+                                        temp3 = new Op(stod(vect.at(i+1)));
+                                        temp2 = list.top();
+					list.pop();
                                         temp1 = new Mult(temp2, temp3);
 					list.push(temp1);
 				}
-				else if(input[i] == '/'){                                                                                                                                                                                                  temp3 = new Base(input[i+1]);
-                                        temp2 = list.pop();
+				else if(vect.at(i) == "/"){                                                                                                                                         
+					temp3 = new Op(stod(vect.at(i+1)));
+                                        temp2 = list.top();
+					list.pop();
 					temp1 = new Div(temp2, temp3);
 					list.push(temp1);
 				}
-				else if(input[i] == '-'){
-					temp3 = new Base(input[i+1]);
-					temp2 = list.pop();
+				else if(vect.at(i) == "-"){
+					temp3 = new Op(stod(vect.at(i+1)));
+					temp2 = list.top();
+					list.pop();
 					temp1 = new Sub(temp2, temp3);
 					list.push(temp1);
 				}
-				else if(input[i] == '**'){
-					temp3 = new Base(input[i+1]);
-					temp2 = list.pop();
+				else if(vect.at(i) == "**"){
+					temp3 = new Op(stod(vect.at(i+1)));
+					temp2 = list.top();
+					list.pop();
 					temp1 = new Pow(temp2, temp3);
 					list.push(temp1);
 				}
 			}
-			return list.pop();	
+			return list.top();	
 		}			
 
 };
