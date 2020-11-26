@@ -25,7 +25,7 @@ class Div : public Base {
 			return "-1";
 		}
 		else{
-			return op1->stringify() + "/" + op2->stringify();
+			return op1->stringify() + " / " + op2->stringify();
 		} 
 	}
 };
