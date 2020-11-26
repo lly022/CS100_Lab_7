@@ -2,7 +2,7 @@ test
 cmake_install.cmake
 Makefile
 CMakeCache.txt
-
+calculator
 CMakeFiles
 lib
 
