@@ -42,7 +42,7 @@ class Factory{
                                 vect.push_back(static_cast<string>(input[i]));
                         }
 			for(int i = 0; i < vect.size(); i++){ //checks operator follows operand and vice versa
-				if(vect.at(i) == "+" || input[i] == "*" || input[i] == "-" || input[i] == "/" || input[i] == "**" ){
+				if(vect.at(i) == "+" || vect.at(i) == "*" || vect.at(i) == "-" || vect.at(i) == "/" || vect.at(i) == "**" ){
 					if(flag == 0){
 						cout << "Input is invalid" << endl;
 						return nullptr;
@@ -52,8 +52,7 @@ class Factory{
 					}
 				 
 				}
-				if(isdigit(vect.at(i).at(0))){
-					
+				if(isdigit(vect.at(i).at(0))){	
 					if(flag == 1){
 						cout << "Input is invalid" << endl;
 						return nullptr;
